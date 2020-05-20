@@ -3,7 +3,7 @@
 A web base movie recommender engine using various models such as negative matrix factorization algorithm, user-based cosimilarity matrix and a custom item-based recommender algorithm that takes name of three movies and creates a new movie vector from the combination of them and recommend most similar movies.
 
 ## Usage:
- 1. Clone this repository:
+ 1. Clone this repository: https://github.com/Ayazdi/movie_recommender.git
  2. Fill in your PostgreSQL connection string in the config.py
  3. Run read_and_train.py
  4. Run run_web.sh and go the provided link in your browser(localhost:5000)
@@ -12,7 +12,7 @@ A web base movie recommender engine using various models such as negative matrix
 ![Choosing the moveis](,/webpage_1.png)
 ![Recommendations](,/webpage_2.png)
 
-## Model:
+## Models:
   1. NMF: Negative matrix factorization
   2. Cosim: User-based cosimilarity matrix model. This option creates a new user with ratings of the given movies (all consider 5) and recommend movies from similar user ratings
   3. Cosim Item: Item-based cosimilarity matrix model. This option recommend movies that most similar to each individual given movies_list
@@ -29,3 +29,6 @@ A web base movie recommender engine using various models such as negative matrix
  - sqlalchemy
  - Scikit-learn
  - scipy
+
+## License:
+Free software: MIT License
