@@ -4,16 +4,15 @@
  """
 import pandas as pd
 import pickle
-import os
 from sklearn.decomposition import NMF
 from scipy.spatial import distance
 from sqlalchemy import create_engine
 from config import POSTGRES
-import numpy as np
 import re
 import sys
+from os.path import dirname
+sys.path.append(dirname("./data/"))
 
-sys.path.append("./data/")
 
 PG = create_engine(POSTGRES)
 
@@ -33,20 +32,20 @@ def read_and_transform():
     Read and transform the csv files
     """
 
-    movies = pd.read_csv('movies.csv')
+    movies = pd.read_csv('./data/movies.csv')
     # Make a new year column and remove the year form the title
     movies['year'] = movies['title'].apply(year)
     movies['title'] = movies['title'].apply(title)
     movies['title'] = movies['title'].apply(pd.Series)
     movies['year'] = movies['year'].apply(pd.Series)
 
-    rating = pd.read_csv('ratings.csv')
+    rating = pd.read_csv('./data/ratings.csv')
     rating['timestamp'] = pd.to_datetime(rating['timestamp'], unit='s')
 
-    tags = pd.read_csv('tags.csv')
+    tags = pd.read_csv('./data/tags.csv')
     tags['timestamp'] = pd.to_datetime(tags['timestamp'], unit='s')
 
-    links = pd.read_csv('links.csv')
+    links = pd.read_csv('./data/links.csv')
 
     movie_dict = pd.Series(movies.movieId.values, index=movies.title).to_dict() # check if we need this
     matrix = pd.pivot_table(rating, values='rating', index='userId', columns='movieId')

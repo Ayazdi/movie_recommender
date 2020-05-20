@@ -3,10 +3,10 @@
 from flask import Flask, render_template, request
 from recommender import user_array, get_movies_nmf, get_movies_cosim, get_movies_cosim_item, get_movies_cosim_item_mix
 from sqlalchemy import create_engine
-from config import USER, PASS
+from config import POSTGRES
 
-conn_string = f'postgres://{USER}:{PASS}@0.0.0.0:5433/Movies'
-PG = create_engine(conn_string)
+
+PG = create_engine(POSTGRES)
 
 
 app = Flask(__name__)
@@ -24,6 +24,7 @@ def recommender():
     user_input_movies = list(user_input.values())[:-1]
     user_input_movies_fuzzed = []
     for movie in user_input_movies:
+        # Search for the name of the movie in the database using tsvector
         movie_name_query = f"""SELECT title, "movieId",
                         ts_rank_cd(to_tsvector('english', movies.title), to_tsquery('''{movie}'':*'))
                         AS score
