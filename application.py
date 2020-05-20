@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """ This module runs Flask"""
 
 from flask import Flask, render_template, request
@@ -54,30 +53,3 @@ def recommender():
     return render_template('recommender.html',
                             result_html=result_list,
                             user_input=user_input)
-=======
-from flask import Flask, render_template, request
-from recommender import user_array, get_movies_name
-
-
-app = Flask(__name__)
-
-@app.route('/')
-@app.route('/index')
-def hello_world():
-    return render_template('index.html')
-
-
-@app.route('/recommender')
-def recommender():
-    user_input = dict(request.args)
-    user_input_movies = list(user_input.values())[::2]
-    user_input_ratings = list(user_input.values())[1::2]
-    user_input = dict(zip(user_input_movies, user_input_ratings))
-    new_array = user_array(user_input)
-    result_list = get_movies_name(new_array)
-
-
-    return render_template('recommender.html',
-                            result_html=result_list,
-                            user_input=user_input)
->>>>>>> 94b87c11471601653b3dd4c460fc307c73f79812

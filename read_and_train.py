@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import pandas as pd
 import pickle
 import os
@@ -96,56 +95,3 @@ if __name__ == '__main__':
     read_and_transform()
     train_and_save_nmf()
     train_cosim_item_based_model()
-=======
-import pandas as pd
-import pickle
-import os
-from sqlalchemy import create_engine
-from sklearn.decomposition import NMF
-import numpy as np
-
-PG = create_engine('postgres://Khamirz:Sy1234sy@localhost:5432/movies')
-
-
-def read_and_transform():
-
-    movies = pd.read_csv('movies.csv')
-
-    rating = pd.read_csv('ratings.csv')
-    rating['timestamp'] = pd.to_datetime(rating['timestamp'], unit='s')
-
-    tags = pd.read_csv('tags.csv')
-    tags['timestamp'] = pd.to_datetime(tags['timestamp'], unit='s')
-
-    links = pd.read_csv('links.csv')
-    movie_dict = pd.Series(movies.movieId.values,index=movies.title).to_dict()
-    matrix = pd.pivot_table(rating, values='rating', index='userId', columns='movieId')
-
-    return movies, rating, tags, links, movie_dict, matrix
-
-    # movies.to_sql('movies', PG)
-    # tags.to_sql('tags', PG)
-    # rating.to_sql('ratings', PG)
-    # links.to_sql('links', PG)
-
-
-
-def train_and_save_nmf():
-    movies, rating, tags, links, movie_dict, matrix = read_and_transform()
-    matrix = matrix.fillna(2.5)
-    model = NMF(n_components=60, init='random', random_state=10, l1_ratio=0.01)
-    model.fit(matrix)
-
-    pickle.dump(model, open("nmf_model.sav", 'wb'))
-
-def nmf_model():
-
-    model = pickle.load(open("nmf_model.sav", 'rb'))
-    Q = model.components_  # movie-genre matrix (movie weights)
-
-    return model, Q
-
-if __name__ == '__main__':
-    read_and_transform()
-    train_and_save_nmf()
->>>>>>> 94b87c11471601653b3dd4c460fc307c73f79812
