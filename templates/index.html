@@ -1,0 +1,114 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<!-- <html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>DS MOVIE RECOMMENDER</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+
+<h1 id="title"> Movies vs COVID-19 </h1>
+<br>
+<h3>We are gonna recommend you some movies to watch during the lockdown!</h3> -->
+{% extends "base.html" %}
+
+
+{% block content %}
+<section class="main-splash">
+  <img id="logo_movie" src="/static/img/movie_covid.png" alt="Cartamon Logo">
+  <h4 id="title"> We're gonna recommend some <span id="highlight">DOPE MOVIES</span><br> to entertain you during your lockdown</h4>
+  <p><i>sponsored by <img id="logo" src="/static/img/movierec3000_logo.png" alt="Cartamon Logo"></i></p>
+
+
+
+
+
+
+    <div class="button-container">
+
+      <form action='/recommender' method="get">
+        <h10 class="merp">Write down <span id="highlight"> movies
+        </span> you like and choose a model:</h10>
+
+           <div class="row">
+             <div class="col">
+               <input type="text" class="form-control" name="movie1" placeholder="type anything." required>
+             </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" name="movie2" placeholder="type anything." required>
+            </div>
+         </div>
+         <div class="row">
+           <div class="col">
+             <input type="text" class="form-control" name="movie3" placeholder="type anything." required>
+           </div>
+        </div>
+        <!-- <br>
+        <input type="text" name="movie2" placeholder="Enter a Movie Title">
+        <br>
+        <input type="text" name="movie3" placeholder="Enter a Movie Title">
+        <br> -->
+</p>
+
+        <label for="models">Choose a model:</label>
+
+        <select class="custom_select"  style='width:200px' name='model'>
+          <option value="Cosim">Cosim</option>
+          <option value="NMF">NMF</option>
+          <option value="Cosim Item">Cosim Item</option>
+          <option value="Cosim Item Mix">Cosim Item Mix</option>
+        </select>
+          <br>
+          <div class="button-container">
+            <button type="submit" class="btn btn-danger btn-lg m-3">Submit</button>
+          </div>
+          <!-- <input type="submit" value="Get Result"> -->
+      </form>
+
+
+    </div>
+
+</section>
+
+
+
+</body>
+
+</html>
+{% endblock %}
+=======
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>DS MOVIE RECOMMENDER</title>
+</head>
+
+<body>
+
+<h1> Movies vs COVID-19 </h1>
+<br>
+<h3>We are gonna recommend you some movies to watch!</h3>
+
+
+<form action='/recommender' method="get">
+  <p>Enter movies you've watched before and rate them from 1 to 5</p>
+  <input type="text" name="movie1" placeholder="Enter a Movie Title">
+  <input type="text" name="rating1" placeholder="Enter a Rating (1-5)">
+  <br>
+  <input type="text" name="movie2" placeholder="Enter a Movie Title">
+  <input type="text" name="rating2" placeholder="Enter a Rating (1-5)">
+  <br>
+  <input type="text" name="movie3" placeholder="Enter a Movie Title">
+  <input type="text" name="rating3" placeholder="Enter a Rating (1-5)">
+  <br>
+  <input type="submit" value="PRESS TO SEE YOUR AMAZING MOVIES">
+</form>
+</body>
+
+</html>
+>>>>>>> 94b87c11471601653b3dd4c460fc307c73f79812
