@@ -9,8 +9,8 @@ A web base movie recommender engine using various models such as negative matrix
  4. Run run_web.sh and go the provided link in your browser(localhost:5000)
  5. Enter name of three movies you like and choose a model for recommendation
 
-![Choosing the moveis](,/webpage_1.png)
-![Recommendations](,/webpage_2.png)
+![Choosing the moveis](./webpage_1.png)
+![Recommendations](./webpage_2.png)
 
 ## Model:
   1. NMF: Negative matrix factorization
