@@ -5,7 +5,7 @@ from recommender import user_array, get_movies_nmf, get_movies_cosim, get_movies
 from sqlalchemy import create_engine
 from config import USER, PASS
 
-conn_string = f'postgres://{USER}:{PASS}@localhost:5432/movies'
+conn_string = f'postgres://{USER}:{PASS}@0.0.0.0:5433/Movies'
 PG = create_engine(conn_string)
 
 

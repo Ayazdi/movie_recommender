@@ -1,14 +1,21 @@
+"""
+  This module read and clean the data into a dataframe foramt.
+  Then, train and save the models.
+ """
 import pandas as pd
 import pickle
 import os
-from sqlalchemy import create_engine
 from sklearn.decomposition import NMF
 from scipy.spatial import distance
+from sqlalchemy import create_engine
+from config import POSTGRES
 import numpy as np
 import re
+import sys
 
-conn_string = f'postgres://{USER}:{PASS}@localhost:5432/movies'
-PG = create_engine(conn_string)
+sys.path.append("./data/")
+
+PG = create_engine(POSTGRES)
 
 
 def year(year):
@@ -48,6 +55,14 @@ def read_and_transform():
 
 
 movies, rating, tags, links, movie_dict, matrix = read_and_transform()
+
+
+def add_to_database(movies, rating, tags, links):
+    """Add dataframes to Postgres database"""
+    movies.to_sql('movies', PG)
+    tags.to_sql('tags', PG)
+    rating.to_sql('ratings', PG)
+    links.to_sql('links', PG)
 
 
 def train_and_save_nmf():
@@ -92,6 +107,7 @@ def read_cosim_item_based_model():
 
 
 if __name__ == '__main__':
+    add_to_database(movies, rating, tags, links)
     read_and_transform()
     train_and_save_nmf()
     train_cosim_item_based_model()
