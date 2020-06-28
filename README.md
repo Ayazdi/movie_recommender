@@ -1,6 +1,6 @@
 # Movie Recommender
 
-A web base movie recommender engine using various models such as negative matrix factorization algorithm, user-based cosimilarity matrix and a custom item-based recommender algorithm that takes name of three movies and creates a new movie vector from the combination of them and recommend most similar movies.
+A web-based movie recommender engine using various models such as negative matrix factorization algorithm, user-based cosimilarity matrix and a custom item-based recommender algorithm that takes name of three movies and creates a new movie vector from the combination of them and recommend most similar movies. Uses PostGres's full-text search to match user-input to films in the database
 
 ## Usage:
  1. Clone this repository: https://github.com/Ayazdi/movie_recommender.git
