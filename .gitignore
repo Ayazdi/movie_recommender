@@ -137,3 +137,5 @@ sim_matrix_movie_based.csv
 
 # config file
 # config.py
+ml-25m.zip
+data/ml-25m/*

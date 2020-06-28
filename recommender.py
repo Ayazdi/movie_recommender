@@ -24,7 +24,7 @@ def user_array(movie_ratings, nmf=False):
     else:
         new_user[:] = np.nan
 
-    for k,v in movie_ratings.items():
+    for k, v in movie_ratings.items():
         movie_id = list(movies['movieId'][movies['title'] == k])[0]
         new_user[new_user.index == movie_id] = v
     # new_user = new_user.fillna(matrix.mean())
@@ -70,7 +70,8 @@ def get_movies_nmf(new_user):
     user_rating['new_rating'] = new_rating
 
     user_rating = user_rating[user_rating['initial'] == 2.5]
-    top_movie_id = user_rating.sort_values('new_rating', ascending=False).head(5).index
+    top_movie_id = user_rating.sort_values(
+        'new_rating', ascending=False).head(5).index
 
     return id_to_name(top_movie_id)
 
@@ -87,13 +88,17 @@ def get_movies_cosim(new_user):
 
     vector = 1 - distance.pdist(matrix_f, 'cosine')
     sim_mat = distance.squareform(vector)
-    sim_mat = pd.DataFrame(sim_mat, index=matrix_n.index, columns=matrix_n.index)
+    sim_mat = pd.DataFrame(sim_mat, index=matrix_n.index,
+                           columns=matrix_n.index)
 
-    sim_users = sim_mat.loc['new'].sort_values(ascending=False)[1:4].index  # number of similar users to be consider
+    # number of similar users to be consider
+    sim_users = sim_mat.loc['new'].sort_values(ascending=False)[1:4].index
     sim_users = matrix.loc[sim_users]
 
-    high_rate = list(sim_users.mean()[(sim_users.mean().sort_values(ascending=False) == 5)].index)
-    top_movie_id = sim_users[high_rate].isna().sum().sort_values(ascending=False).head(5).index
+    high_rate = list(sim_users.mean()[
+                     (sim_users.mean().sort_values(ascending=False) == 5)].index)
+    top_movie_id = sim_users[high_rate].isna().sum(
+    ).sort_values(ascending=False).head(5).index
 
     return id_to_name(top_movie_id)
 
@@ -112,7 +117,8 @@ def get_movies_cosim_item(watched_list_name):
 
     movie_id = []
     for i in watched_list_id:
-        rec_movies = list(sim_mat_item.loc[i].sort_values(ascending=False)[1:6].index)
+        rec_movies = list(sim_mat_item.loc[i].sort_values(
+            ascending=False)[1:6].index)
         for j in rec_movies:
             movie_id.append(int(j))
 
@@ -135,7 +141,8 @@ def get_movies_cosim_item_mix(watched_list_name):
     new_movie.loc['new_movie'] = np.nan
     new_movie = new_movie.fillna(new_movie.mean())
 
-    similar_movies_id = new_movie.loc['new_movie'].sort_values(ascending=False).head(8).index
+    similar_movies_id = new_movie.loc['new_movie'].sort_values(
+        ascending=False).head(8).index
     similar_movies_id = [int(x) for x in similar_movies_id]
 
     for id_ in watched_list_id:

@@ -47,8 +47,10 @@ def read_and_transform():
 
     links = pd.read_csv('./data/links.csv')
 
-    movie_dict = pd.Series(movies.movieId.values, index=movies.title).to_dict() # check if we need this
-    matrix = pd.pivot_table(rating, values='rating', index='userId', columns='movieId')
+    # check if we need this
+    movie_dict = pd.Series(movies.movieId.values, index=movies.title).to_dict()
+    matrix = pd.pivot_table(rating, values='rating',
+                            index='userId', columns='movieId')
 
     return movies, rating, tags, links, movie_dict, matrix
 
@@ -67,7 +69,8 @@ def add_to_database(movies, rating, tags, links):
 def train_and_save_nmf():
     """ Train negative matrix factorization model and save it as pickle file"""
     matrix = matrix.fillna(2.5)
-    model = NMF(n_components=100, init='random', random_state=10, l1_ratio=0.01)
+    model = NMF(n_components=100, init='random',
+                random_state=10, l1_ratio=0.01)
     model.fit(matrix)
     pickle.dump(model, open("nmf_model.sav", 'wb'))
 
@@ -87,12 +90,15 @@ def train_cosim_item_based_model():
     """
     Train a cosimilarity matrix based on items(movies) and save it as CSV file
     """
-    matrix_i = pd.pivot_table(rating, values='rating', index='movieId', columns='userId')
-    matrix_i = matrix_i[matrix_i.isna().sum(axis=1) < 605]  # Only movies with at least 5 ratings
+    matrix_i = pd.pivot_table(rating, values='rating',
+                              index='movieId', columns='userId')
+    # Only movies with at least 5 ratings
+    matrix_i = matrix_i[matrix_i.isna().sum(axis=1) < 605]
     matrix_f = matrix_i.fillna(0)
     vector = distance.pdist(matrix_f, 'cosine')
     sim_mat = 1 - distance.squareform(vector)
-    sim_mat = pd.DataFrame(sim_mat, index=matrix_i.index, columns=matrix_i.index)
+    sim_mat = pd.DataFrame(sim_mat, index=matrix_i.index,
+                           columns=matrix_i.index)
     sim_mat.to_csv('sim_matrix_movie_based.csv')
 
 
